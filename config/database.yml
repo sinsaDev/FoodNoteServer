@@ -20,6 +20,21 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8mb4
+  database: lovebattery
+  username: root
+  password:
+  host: localhost
+  port: 3306
+  secure_auth: false
+  pool: 35
+  timeout: 300000
+  strict: false
+
+
+#production:
+#  <<: *default
+#  database: db/production.sqlite3
