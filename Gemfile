@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
-gem 'mysql2', '~> 0.5.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
@@ -45,7 +44,10 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.1'
   gem "capistrano-rails", "~> 1.4", require: false
   gem 'capistrano3-puma', github: "wangsy/capistrano-puma"
+end
 
+group :production do
+  gem 'mysql2', '~> 0.5.2'
 end
 
 group :test do
