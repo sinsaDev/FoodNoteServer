@@ -27,7 +27,7 @@ production:
   database: sinsa
   username: root
   password: q1w2e3r4
-  host: ec2-18-216-40-129.us-east-2.compute.amazonaws.com
+  host: 18.216.40.129
   port: 3306
   secure_auth: false
   pool: 35
