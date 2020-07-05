@@ -24,10 +24,10 @@ test:
 production:
   adapter: mysql2
   encoding: utf8mb4
-  database: lovebattery
+  database: sinsa
   username: root
-  password:
-  host: localhost
+  password: q1w2e3r4
+  host: ec2-18-216-40-129.us-east-2.compute.amazonaws.com
   port: 3306
   secure_auth: false
   pool: 35
