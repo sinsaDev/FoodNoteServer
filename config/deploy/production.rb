@@ -7,7 +7,8 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-
+set :keep_releases, 2
+# aws 서버에 릴리즈 파일을 두개로 제한
 
 # role-based syntax
 # ==================
