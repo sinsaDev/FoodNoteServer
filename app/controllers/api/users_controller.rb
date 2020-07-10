@@ -9,6 +9,7 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
+
   def login
     # 로그인시 받은 아이디를 토대로 유저 정보를 찾는다
     # 그 후 DB에 저장된 비밀번호와 비교하여 맞을 시 200 보내고 아닐 시 401
@@ -16,7 +17,7 @@ class Api::UsersController < Api::ApplicationController
     if user&.authenticate params[:password]
       render json: ResponseWrap.data_wrap(user.as_json), status: :ok
     else
-      render json: RESERVED_NAMES.data_wrap(nil), status: :unauthorized
+      render json: ResponseWrap.data_wrap(nil), status: :unauthorized
     end
   end
 
