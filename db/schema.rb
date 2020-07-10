@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2020_07_10_132809) do
 
-  create_table "user_descriptions", force: :cascade do |t|
-    t.integer "user_id", null: false
+  create_table "user_descriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.text "address", null: false
     t.integer "gender", null: false
     t.integer "status", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_132809) do
     t.index ["user_id"], name: "index_user_descriptions_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
     t.integer "statue"
