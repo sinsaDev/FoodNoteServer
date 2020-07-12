@@ -1,9 +1,10 @@
 class Api::UsersController < Api::ApplicationController
-  #before_action :token_authentication
+  before_action :token_authentication
+
   skip_before_action :verify_authenticity_token
+
   def create
     user = User.new(user_params)
-
     # access_token과 refresh_token을 두개 생성
     # refresh_token은 db의 extra에 저장하고 클라이언트에서 access_token 재발급 요청 시 비교 후 재발급
     access_token = JsonWebToken.access_token_encode(user_id: user.id)
@@ -31,6 +32,6 @@ class Api::UsersController < Api::ApplicationController
 
   private
   def user_params
-    params.permit(:email, :password_digest, :nickname, :sns)
+    params.permit(:email, :password, :name, :nickname, :sns)
   end
 end
