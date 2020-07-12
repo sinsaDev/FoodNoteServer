@@ -8,11 +8,9 @@ class Api::ApplicationController < ActionController::Base
       user = User.find(hash[:user_id])
       # 사용자가 보낸 토큰과 db상에 저장된 refresh_token이 일치하는 경우
       if user.extra[:refresh_token].to_s == refresh_token
-        # 만약 저장된 토큰이 만료되었을 경우
+        # 만약 저장된 access_token이 만료되었을 경우
         if Time.zone.now < hash[:exp]
-          new_refesh_token = JsonWebToken.refresh_token_encode(user_id: user.id)
-          user.extra.delete(:refresh_token)
-          user.extra.merge!(refresh_token: new_refesh_token)
+          @new_access_token = JsonWebToken.access_token_encode(user_id: user.id)
         end
       else
         # 유효하지 않는 토큰으로 로그아웃 시킵니다

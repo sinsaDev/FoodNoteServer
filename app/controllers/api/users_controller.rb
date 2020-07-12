@@ -24,10 +24,15 @@ class Api::UsersController < Api::ApplicationController
     # 그 후 DB에 저장된 비밀번호와 비교하여 맞을 시 200 보내고 아닐 시 401
     user = User.find_by_email params[:email]
     if user&.authenticate params[:password]
-      render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+      render json: ResponseWrap.data_wrap(user.as_json.merge(access_token: @new_access_token)), status: :ok
     else
       render json: ResponseWrap.data_wrap(nil), status: :unauthorized
     end
+  end
+
+  def show
+    user = User.find params[:id]
+    render json: ResponseWrap.data_wrap(user.as_json.merge(access_token: @new_access_token)), status: :ok
   end
 
   private
