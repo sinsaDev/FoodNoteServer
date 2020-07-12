@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_one :user_description
+  serialize :extra
   has_secure_password
 
   def as_json(option = {})
