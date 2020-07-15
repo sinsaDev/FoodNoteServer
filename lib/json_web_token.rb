@@ -6,13 +6,14 @@ class JsonWebToken
     JWT.encode(payload, SECRET_KEY)
   end
 
-  def self.refresh_token_encode(payload)
-    payload[:exp] = 30.days.from_now.to_i
-    JWT.encode(payload, SECRET_KEY)
-  end
-
   def self.decode(token)
     decode = JWT.decode(token, SECRET_KEY)[0]
     HashWithIndifferentAccess.new decode
   end
+
+  # def self.refresh_token_encode(payload)
+  #   payload[:exp] = 30.days.from_now.to_i
+  #   JWT.encode(payload, SECRET_KEY)
+  # end
+
 end
