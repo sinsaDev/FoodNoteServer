@@ -7,6 +7,14 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  enum status: {
+      customer: 0,
+      partners: 10,
+      unregister: 50
+  }
+
+
+
   def as_json(option = {})
     {
         id: self.id,
