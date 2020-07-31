@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 2020_07_31_133509) do
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
     t.integer "status", default: 0, null: false
@@ -86,9 +85,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_133509) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "extra"
-    t.index ["user_id"], name: "index_users_on_user_id"
   end
 
   add_foreign_key "user_descriptions", "users"
-  add_foreign_key "users", "users"
 end

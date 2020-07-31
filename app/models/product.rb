@@ -1,10 +1,11 @@
 class Product < ApplicationRecord
-  has_many :product_images
-  has_many :product_options
-  has_many :product_prices
-  has_many :product_videos
+  has_many :product_images, dependent: :delete_all
+  has_many :product_options, dependent: :delete_all
+  has_many :product_prices, dependent: :delete_all
+  has_many :product_videos, dependent: :delete_all
 
+  enum status: {
 
-
+  }
 
 end
