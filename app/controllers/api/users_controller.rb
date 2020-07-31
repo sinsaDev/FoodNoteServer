@@ -26,7 +26,7 @@ class Api::UsersController < Api::ApplicationController
 
   def show
     user = User.find params[:id]
-    render json: ResponseWrap.data_wrap(user.as_json.merge(access_token: @access_token)), status: :ok
+    render json: ResponseWrap.data_wrap(user.as_json), status: :ok
   end
 
   def destroy
