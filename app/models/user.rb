@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :user_description
+  has_many :user_description
 
   validates :email, :nickname, uniqueness: true
 
