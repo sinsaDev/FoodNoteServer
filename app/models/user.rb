@@ -13,16 +13,19 @@ class User < ApplicationRecord
       unregister: 50
   }
 
-
+  def detail_for_user
+    user_description.last
+  end
 
   def as_json(option = {})
     {
         id: self.id,
         email: self.email,
-        statue: self.statue,
+        statue: self.status,
         name: self.name,
         nickname: self.nickname,
-        sns: self.sns
+        sns: self.sns,
+        details: self.detail_for_user.as_json
     }
   end
 end
