@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :user_description, dependent: :delete_all
+  has_many :products, dependent: :delete_all
 
   validates :email, :nickname, uniqueness: true
 
