@@ -35,6 +35,15 @@ class Api::ProductsController < Api::ApplicationController
     end
   end
 
+  def show
+    product = Product.find params[:id]
+    if product.present?
+      render json: ResponseWrap.data_wrap(product.as_json), status: :ok
+    else
+      render json: ResponseWrap.data_wrap(nil, e.errors.details), status: :bad_request
+    end
+  end
+
   private
   def products_params
     params.permit(:name)
