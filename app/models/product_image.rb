@@ -4,4 +4,14 @@ class ProductImage < ApplicationRecord
   enum status: {
 
   }
+
+  def as_json(option = {})
+    {
+      id: self.id,
+      seq: self.seq,
+      url: self.url,
+      path: self.path,
+      field: self.field
+    }
+  end
 end

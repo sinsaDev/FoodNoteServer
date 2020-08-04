@@ -4,4 +4,12 @@ class ProductOption < ApplicationRecord
   enum status: {
 
   }
+
+  def as_json(option = {})
+    {
+      id: self.id,
+      color: self.color,
+      size: self.size,
+    }
+  end
 end
