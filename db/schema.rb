@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_02_115259) do
+ActiveRecord::Schema.define(version: 2020_10_01_111652) do
 
   create_table "product_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "product_id", null: false
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_08_02_115259) do
     t.bigint "product_id", null: false
     t.string "color", null: false
     t.string "size", null: false
-    t.integer "status", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_product_options_on_product_id"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_08_02_115259) do
     t.integer "seq", null: false
     t.text "path", null: false
     t.text "url", null: false
-    t.string "deleted", null: false
+    t.string "deleted", default: "no", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_product_videos_on_product_id"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2020_08_02_115259) do
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
-    t.integer "status", null: false
-    t.string "deleted", null: false
+    t.integer "status", default: 0, null: false
+    t.string "deleted", default: "no", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
@@ -79,12 +79,13 @@ ActiveRecord::Schema.define(version: 2020_08_02_115259) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.integer "status", default: 0, null: false
-    t.string "name", null: false
-    t.string "nickname", null: false
+    t.string "name"
+    t.string "nickname"
     t.integer "sns", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "extra"
+    t.string "phone"
   end
 
   add_foreign_key "user_descriptions", "users"
