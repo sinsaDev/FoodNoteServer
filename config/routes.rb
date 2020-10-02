@@ -13,5 +13,9 @@ Rails.application.routes.draw do
     resources :products
     post "users/login", to: "users#login"
   end
+
+  namespace :admin do
+    resources :users
+  end
 end
 
