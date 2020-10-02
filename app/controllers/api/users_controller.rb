@@ -25,7 +25,7 @@ class Api::UsersController < Api::ApplicationController
       user = User.sign_up_check(naver_params)
       # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
       if user.status == User.statuses[:not_phone_certified]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :found
+        render json: ResponseWrap.data_wrap(user.as_json), status: :created
         # 휴대폰인증이 끝난 경우 -> 로그인화면으로
       elsif user.status == User.statuses[:sign_up]
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok
@@ -50,7 +50,7 @@ class Api::UsersController < Api::ApplicationController
       user = User.sign_up_check(kakao_params)
       # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
       if user.status == User.statuses[:not_phone_certified]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :found
+        render json: ResponseWrap.data_wrap(user.as_json), status: :created
         # 휴대폰인증이 끝난 경우 -> 로그인화면으로
       elsif user.status == User.statuses[:sign_up]
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok
@@ -75,7 +75,7 @@ class Api::UsersController < Api::ApplicationController
       user = User.sign_up_check(facebook_params)
       # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
       if user.status == User.statuses[:not_phone_certified]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :found
+        render json: ResponseWrap.data_wrap(user.as_json), status: :created
       # 휴대폰인증이 끝난 경우 -> 로그인화면으로
       elsif user.status == User.statuses[:sign_up]
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok

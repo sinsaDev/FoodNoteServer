@@ -17,7 +17,7 @@ class User < ApplicationRecord
   enum sns: {
       kakao: 0,
       naver: 1,
-      face_book: 2
+      facebook: 2
   }
 
   def self.sign_up_check(params)
