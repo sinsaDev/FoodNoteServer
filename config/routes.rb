@@ -9,9 +9,9 @@ Rails.application.routes.draw do
         post :facebook_login
       end
     end
-    resources :users_description
-    resources :products
-    post "users/login", to: "users#login"
+    #resources :users_description
+    #resources :products
+    #post "users/login", to: "users#login"
   end
 
   namespace :admin do
