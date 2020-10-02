@@ -4,11 +4,12 @@ class Api::UsersController < Api::ApplicationController
 
   def create
     user = User.user_information_update(user_params)
-
     # 유저 정보 있는지 체크
     if user.present?
-      # 유저 정보 업데이트(폰번호, 닉네임)
-      if user.update_attributes(user_params)
+      user.status = User.statuses[:sign_up]
+      user.phone = user_params[:phone]
+      user.nickname = user_params[:nickname]
+      if user.save
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok
       else
         render json: ResponseWrap.data_wrap(nil, user.errors.details), status: :bad_request
@@ -22,10 +23,15 @@ class Api::UsersController < Api::ApplicationController
     # 회원가입 여부 체크
     if User.sign_up_check(naver_params)
       user = User.sign_up_check(naver_params)
+      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
       if user.status == User.statuses[:not_phone_certified]
         render json: ResponseWrap.data_wrap(user.as_json), status: :found
-      else
+        # 휴대폰인증이 끝난 경우 -> 로그인화면으로
+      elsif user.status == User.statuses[:sign_up]
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+        # 에러 발생
+      else
+        render json: ResponseWrap.data_wrap(nil), status: :bad_request
       end
     else
       user = User.new(naver_params)
@@ -37,6 +43,58 @@ class Api::UsersController < Api::ApplicationController
       end
     end
   end
+
+  def kakao_login
+    # 회원가입 여부 체크
+    if User.sign_up_check(kakao_params)
+      user = User.sign_up_check(kakao_params)
+      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
+      if user.status == User.statuses[:not_phone_certified]
+        render json: ResponseWrap.data_wrap(user.as_json), status: :found
+        # 휴대폰인증이 끝난 경우 -> 로그인화면으로
+      elsif user.status == User.statuses[:sign_up]
+        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+        # 에러 발생
+      else
+        render json: ResponseWrap.data_wrap(nil), status: :bad_request
+      end
+    else
+      user = User.new(kakao_params)
+      # 회원가입 성공 여부
+      if user.save
+        render json: ResponseWrap.data_wrap(user.as_json), status: :created
+      else
+        render json: ResponseWrap.data_wrap(nil), status: :bad_request
+      end
+    end
+  end
+
+  def facebook_login
+    # 회원가입 여부 체크
+    if User.sign_up_check(facebook_params)
+      user = User.sign_up_check(facebook_params)
+      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
+      if user.status == User.statuses[:not_phone_certified]
+        render json: ResponseWrap.data_wrap(user.as_json), status: :found
+      # 휴대폰인증이 끝난 경우 -> 로그인화면으로
+      elsif user.status == User.statuses[:sign_up]
+        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+      # 에러 발생
+      else
+        render json: ResponseWrap.data_wrap(nil), status: :bad_request
+      end
+    else
+      user = User.new(facebook_params)
+      # 회원가입 성공 여부
+      if user.save
+        render json: ResponseWrap.data_wrap(user.as_json), status: :created
+      else
+        render json: ResponseWrap.data_wrap(nil), status: :bad_request
+      end
+    end
+  end
+
+
   # def create
   #   user = User.new(user_params)
   #   if user.save
@@ -75,8 +133,7 @@ class Api::UsersController < Api::ApplicationController
   private
 
   def user_params
-    user_params_for_naver = params.permit(:email, extra: {})
-    user_params_for_naver.merge(status: 0, sns: User.sns[:naver], password: (('0'..'9').to_a + ('a'..'z').to_a).shuffle.first(20).join)
+    params.permit(:phone, :nickname, :email)
   end
 
   def naver_params

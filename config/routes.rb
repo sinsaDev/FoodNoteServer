@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users do
       collection do
-        get :naver_login
-        get :kakao_login
-        get :facebook_login
+        post :naver_login
+        post :kakao_login
+        post :facebook_login
       end
     end
     resources :users_description
