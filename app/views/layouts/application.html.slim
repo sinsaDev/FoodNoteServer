@@ -1,7 +1,7 @@
 DOCTYPE
 html
   head
-    title SinsaServer123
+    title 관리자페이지
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -13,7 +13,9 @@ html
 
 
   body
+    - if current_user.present?
+      = render partial: 'layouts/admin_nav'
     .container-fluid
       .row
-        .col
+        .col-lg-9.mx-auto
           = yield

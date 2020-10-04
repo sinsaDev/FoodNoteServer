@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def login
-
+    redirect_to admin_users_path if session[:user_id].present?
   end
 
   def create
