@@ -1,0 +1,6 @@
+.mt-3
+  = form_with(url: sessions_path, method: "post") do |form|
+    .form-group
+      = form.text_field :email, class: "form-control mb-3", placeholder: "이메일주소를 입력하세요"
+      = form.password_field :password, class: "form-control mb-3", placeholder: '비밀번호를 입력하세요'
+    = form.submit "로그인하기", class: "button btn btn-primary"

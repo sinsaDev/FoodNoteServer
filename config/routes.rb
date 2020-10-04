@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  root to: 'main#index'
+  root to: 'sessions#login'
+
   namespace :api do
     resources :users do
       collection do
@@ -16,6 +17,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+  end
+
+  resources :sessions do
+    collection do
+      get :login
+    end
   end
 end
 
