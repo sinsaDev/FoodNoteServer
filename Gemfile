@@ -25,6 +25,8 @@ gem 'jwt'
 gem 'slim'
 gem 'bootstrap', '~> 5.0.0.alpha1'
 gem 'jquery-rails'
+gem 'kaminari'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
