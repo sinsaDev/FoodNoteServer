@@ -7,7 +7,4 @@ class DeleteTables < ActiveRecord::Migration[6.0]
     drop_table :user_descriptions
     drop_table :product_prices
   end
-
-
-
 end
