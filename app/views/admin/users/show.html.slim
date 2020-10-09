@@ -1,46 +1,22 @@
-table.table
-  thead.thead-dark
-    tr
-      th scope="col"
-      th scope="col"  First
-      th scope="col"  Last
-      th scope="col"  Handle
-  tbody
-    tr
-      th scope="row"  1
-      td Mark
-      td Otto
-      td @mdo
-    tr
-      th scope="row"  2
-      td Jacob
-      td Thornton
-      td @fat
-    tr
-      th scope="row"  3
-      td Larry
-      td the Bird
-      td @twitter
-table.table
-  thead.thead-light
-    tr
-      th scope="col"  #
-      th scope="col"  First
-      th scope="col"  Last
-      th scope="col"  Handle
-  tbody
-    tr
-      th scope="row"  1
-      td Mark
-      td Otto
-      td @mdo
-    tr
-      th scope="row"  2
-      td Jacob
-      td Thornton
-      td @fat
-    tr
-      th scope="row"  3
-      td Larry
-      td the Bird
-      td @twitter
+h2.font-weight-bolder.mb-4.mt-1 유저 상세정보
+.col-6
+  table.table
+    thead.thead-dark
+      tr
+        th scope="col" 상태
+        td scope="row"=@user.status
+      tr
+        th scope="col" 이메일
+        td scope="row"= @user.email
+      tr
+        th scope="col"  닉네임
+        td scope="row"= @user.nickname
+      tr
+        th scope="col"  휴대폰 번호
+        td scope="row"= @user.phone
+      tr
+        th scope="col"  가입 경로
+        td scope="row"= @user.sns
+      tr
+        th scope="col"  가입 날짜
+        td scope="row"=  l(@user.created_at, format: :long)
