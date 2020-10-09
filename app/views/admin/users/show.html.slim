@@ -4,7 +4,7 @@ h2.font-weight-bolder.mb-4.mt-1 유저 상세정보
     thead.thead-dark
       tr
         th scope="col" 상태
-        td scope="row"=@user.status
+        td scope="row"= label_for_user_status(@user)
       tr
         th scope="col" 이메일
         td scope="row"= @user.email
@@ -16,7 +16,7 @@ h2.font-weight-bolder.mb-4.mt-1 유저 상세정보
         td scope="row"= @user.phone
       tr
         th scope="col"  가입 경로
-        td scope="row"= @user.sns
+        td scope="row"= label_for_sns(@user)
       tr
         th scope="col"  가입 날짜
         td scope="row"=  l(@user.created_at, format: :long)

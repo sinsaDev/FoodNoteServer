@@ -1,7 +1,7 @@
 li.list-group-item
   .d-flex.flex-row
     .col-2.my-auto
-      = status_label_badge(user)
+      = label_for_user_status(user)
     .col-4.my-auto
       small= link_to unregister_information(user.email), admin_user_path(user)
     .col-2.my-auto
