@@ -1,18 +1,16 @@
 h2.font-weight-bolder 유저목록 (#{User.all.count})
-
-
-
 ul.list-group
   li.list-group-item.list-group-item-dark
     .d-flex.flex-row
-      .col-5
-        h6.my-auto 이메일주소
-      .col-3
-        h6.my-auto 닉네임
       .col-2
-        h6.my-auto 가입경로
-      .col-3
-        h6.my-auto 휴대폰 번호
+      .col-4
+        h5.my-auto.font-weight-bolder 이메일주소
+      .col-2
+        h5.my-auto.font-weight-bolder 닉네임
+      .col-2
+        h5.my-auto.font-weight-bolder 가입경로
+      .col-2
+        h5.my-auto.font-weight-bolder 휴대폰 번호
   - @users.each do |user|
     = render partial: "user", locals: {user: user}
   = paginate @users

@@ -1,10 +1,12 @@
 li.list-group-item
   .d-flex.flex-row
-    .col-5
-      small.my-auto= unregister_information(user.email)
-    .col-3
-      small.my-auto= unregister_information(user.nickname)
-    .col-2
-      small.my-auto= unregister_information(user.sns)
-    .col-3
-      small.my-auto= unregister_information(user.phone)
+    .col-2.my-auto
+      = status_label_badge(user)
+    .col-4.my-auto
+      small= link_to unregister_information(user.email), admin_user_path(user)
+    .col-2.my-auto
+      small= unregister_information(user.nickname)
+    .col-2.my-auto
+      small= unregister_information(user.sns)
+    .col-2.my-auto
+      small= unregister_information(user.phone)
