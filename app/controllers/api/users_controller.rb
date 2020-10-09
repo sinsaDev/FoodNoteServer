@@ -19,22 +19,22 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
-  def naver_login
+  def social_login
     # 회원가입 여부 체크
-    if User.sign_up_check(naver_params)
-      user = User.sign_up_check(naver_params)
-      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
-      if user.status == User.statuses[:not_phone_certified]
+    if User.sign_up_check(social_params)
+      user = User.sign_up_check(social_params)
+      # 추가 회원가입이 끝나지 않은 경우 -> 추가 회원가입 화면으로
+      if user.status.not_phone_certified?
         render json: ResponseWrap.data_wrap(user.as_json), status: :created
-        # 휴대폰인증이 끝난 경우 -> 로그인화면으로
-      elsif user.status == User.statuses[:sign_up]
+        # 추가 회원가입이 끝난 경우 -> 로그인화면으로
+      elsif user.status.sign_up?
         render json: ResponseWrap.data_wrap(user.as_json), status: :ok
         # 에러 발생
       else
         render json: ResponseWrap.data_wrap(nil), status: :bad_request
       end
     else
-      user = User.new(naver_params)
+      user = User.new(social_params)
       # 회원가입 성공 여부
       if user.save
         render json: ResponseWrap.data_wrap(user.as_json), status: :created
@@ -68,32 +68,6 @@ class Api::UsersController < Api::ApplicationController
       end
     end
   end
-
-  def facebook_login
-    # 회원가입 여부 체크
-    if User.sign_up_check(facebook_params)
-      user = User.sign_up_check(facebook_params)
-      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
-      if user.status == User.statuses[:not_phone_certified]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :created
-      # 휴대폰인증이 끝난 경우 -> 로그인화면으로
-      elsif user.status == User.statuses[:sign_up]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
-      # 에러 발생
-      else
-        render json: ResponseWrap.data_wrap(nil), status: :bad_request
-      end
-    else
-      user = User.new(facebook_params)
-      # 회원가입 성공 여부
-      if user.save
-        render json: ResponseWrap.data_wrap(user.as_json), status: :created
-      else
-        render json: ResponseWrap.data_wrap(nil), status: :bad_request
-      end
-    end
-  end
-
 
   # def create
   #   user = User.new(user_params)
@@ -136,18 +110,8 @@ class Api::UsersController < Api::ApplicationController
     params.permit(:phone, :nickname, :email)
   end
 
-  def naver_params
-    user_params_for_naver = params.permit(:email, extra: {})
-    user_params_for_naver.merge(status: 0, sns: User.sns[:naver], password: (('0'..'9').to_a + ('a'..'z').to_a).shuffle.first(20).join)
-  end
-
-  def kakao_params
-    user_params_for_naver = params.permit(:email, extra: {})
-    user_params_for_naver.merge(status: 0, sns: User.sns[:kakao], password: (('0'..'9').to_a + ('a'..'z').to_a).shuffle.first(20).join)
-  end
-
-  def facebook_params
-    user_params_for_naver = params.permit(:email, extra: {})
-    user_params_for_naver.merge(status: 0, sns: User.sns[:face_book], password: (('0'..'9').to_a + ('a'..'z').to_a).shuffle.first(20).join)
+  def social_params
+    user_params_for_social = params.permit(:email, :sns, extra: {})
+    user_params_for_social.merge(status: 0, password: (('0'..'9').to_a + ('a'..'z').to_a).shuffle.first(20).join)
   end
 end

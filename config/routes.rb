@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users do
       collection do
-        post :naver_login
-        post :kakao_login
-        post :facebook_login
+        post :social_login
       end
     end
     #resources :users_description
