@@ -1,16 +1,16 @@
 class Api::ApplicationController < ActionController::Base
 
-  # def token_authentication
-  #   begin
-  #     token = request.headers["Authorization"]
-  #     authentication_token = token.to_s.split(" ").last
-  #     hash = JsonWebToken.decode(authentication_token)
-  #     @user = User.find(hash[:user_id]) # 사용자 정보를 찾음
-  #   rescue JWT::ExpiredSignature => e
-  #     render json: ResponseWrap.data_wrap(nil, e.message), status: :unauthorized
-  #   rescue => e
-  #     render json: ResponseWrap.data_wrap(nil, e.message), status: :unauthorized
-  #   end
+  def token_authentication
+    begin
+      token = request.headers["Authorization"]
+      authentication_token = token.to_s.split(" ").last
+      hash = JsonWebToken.decode authentication_token
+      @user = User.find(hash[:user_id]) # 사용자 정보를 찾음
+    rescue JWT::ExpiredSignature => e
+      render json: ResponseWrap.data_wrap(nil, e.message), status: :unauthorized
+    rescue => e
+      render json: ResponseWrap.data_wrap(nil, e.message), status: :unauthorized
+    end
     # if token.to_s.split(" ").size > 3
     #   refresh_token = token.to_s.split(" ").last
     #   hash = JsonWebToken.decode(refresh_token)
@@ -36,7 +36,7 @@ class Api::ApplicationController < ActionController::Base
     #     render json: ResponseWrap.data_wrap(nil, e.message), status: :unauthorized
     #   end
     # end
-  # end
+  end
   #
   # def user_params
   #   params.permit(:email, :password, :name, :nickname)

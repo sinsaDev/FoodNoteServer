@@ -1,5 +1,5 @@
 class Api::UsersController < Api::ApplicationController
-  # before_action :token_authentication, only: [:show, :destroy]
+  #before_action :token_authentication, only: [:create]
   #skip_before_action :verify_authenticity_token
 
   def create
@@ -10,7 +10,8 @@ class Api::UsersController < Api::ApplicationController
       user.phone = user_params[:phone]
       user.nickname = user_params[:nickname]
       if user.save
-        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+        token = JsonWebToken.access_token_encode({user_id: user.id})
+        render json: ResponseWrap.data_wrap(user.as_json.merge(token: token)), status: :ok
       else
         render json: ResponseWrap.data_wrap(nil, user.errors.details), status: :bad_request
       end
@@ -24,11 +25,12 @@ class Api::UsersController < Api::ApplicationController
     if User.sign_up_check(social_params)
       user = User.sign_up_check(social_params)
       # 추가 회원가입이 끝나지 않은 경우 -> 추가 회원가입 화면으로
-      if user.status.not_phone_certified?
+      if user.not_phone_certified?
         render json: ResponseWrap.data_wrap(user.as_json), status: :created
         # 추가 회원가입이 끝난 경우 -> 로그인화면으로
-      elsif user.status.sign_up?
-        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+      elsif user.sign_up?
+        token = JsonWebToken.access_token_encode({user_id: user.id})
+        render json: ResponseWrap.data_wrap(user.as_json.merge(token: token)), status: :ok
         # 에러 발생
       else
         render json: ResponseWrap.data_wrap(nil), status: :bad_request
@@ -44,30 +46,30 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
-  def kakao_login
-    # 회원가입 여부 체크
-    if User.sign_up_check(kakao_params)
-      user = User.sign_up_check(kakao_params)
-      # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
-      if user.status == User.statuses[:not_phone_certified]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :created
-        # 휴대폰인증이 끝난 경우 -> 로그인화면으로
-      elsif user.status == User.statuses[:sign_up]
-        render json: ResponseWrap.data_wrap(user.as_json), status: :ok
-        # 에러 발생
-      else
-        render json: ResponseWrap.data_wrap(nil), status: :bad_request
-      end
-    else
-      user = User.new(kakao_params)
-      # 회원가입 성공 여부
-      if user.save
-        render json: ResponseWrap.data_wrap(user.as_json), status: :created
-      else
-        render json: ResponseWrap.data_wrap(nil), status: :bad_request
-      end
-    end
-  end
+  # def kakao_login
+  #   # 회원가입 여부 체크
+  #   if User.sign_up_check(kakao_params)
+  #     user = User.sign_up_check(kakao_params)
+  #     # 휴대폰인증이 끝나지 않은 경우 -> 휴대폰인증 화면으로
+  #     if user.status == User.statuses[:not_phone_certified]
+  #       render json: ResponseWrap.data_wrap(user.as_json), status: :created
+  #       # 휴대폰인증이 끝난 경우 -> 로그인화면으로
+  #     elsif user.status == User.statuses[:sign_up]
+  #       render json: ResponseWrap.data_wrap(user.as_json), status: :ok
+  #       # 에러 발생
+  #     else
+  #       render json: ResponseWrap.data_wrap(nil), status: :bad_request
+  #     end
+  #   else
+  #     user = User.new(kakao_params)
+  #     # 회원가입 성공 여부
+  #     if user.save
+  #       render json: ResponseWrap.data_wrap(user.as_json), status: :created
+  #     else
+  #       render json: ResponseWrap.data_wrap(nil), status: :bad_request
+  #     end
+  #   end
+  # end
 
   # def create
   #   user = User.new(user_params)
