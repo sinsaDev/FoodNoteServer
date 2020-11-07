@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   #has_many :user_description, dependent: :delete_all
-  #has_many :products, dependent: :delete_all
+  #has_many :products, dependent: :delete_al
+  has_many :comments, as: :commentable
 
   before_save :generate_user_code
 
@@ -25,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def self.user_information_update(params)
-    find_by(email: params[:email])
+    find_by(email: params[:email], sns: params[:sns])
   end
 
   def as_json(option = {})
