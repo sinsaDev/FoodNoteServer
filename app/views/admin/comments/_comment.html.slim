@@ -1,0 +1,8 @@
+li.list-group-item
+  .d-flex.flex-row
+    .col-3.my-auto
+      = comment.commentable.nickname
+    .col-7.my-auto
+      small= transfer_comments_text(comment)
+    .col-2.my-auto
+      small= comment.created_at

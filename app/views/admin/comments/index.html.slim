@@ -1,0 +1,10 @@
+h2.font-weight-bolder.mb-4.mt-1 유저 리스트 (#{User.all.count})
+ul.list-group
+  li.list-group-item.list-group-item-dark
+    .d-flex.flex-row
+      .col-3
+        h5.my-auto.font-weight-bolder 유저 아이디
+      .col-9
+        h5.my-auto.font-weight-bolder 내용
+  - @comments.each do |comment|
+    = render partial: "admin/comments/comment", locals: {comment: comment}
