@@ -9,5 +9,5 @@
 + Capistrano를 이용하여 ec2에 배포하도록 셋팅을 완료하였습니다.
 
 ## 사용기술
-Language: JavaScript, Ruby
-Framwork : Rails
++ Language: JavaScript, Ruby
++ Framwork : Rails
