@@ -15,3 +15,6 @@
 + Framwork : Rails
 + WebServer : Nginx
 + DataBase : Mysql
+
+## 서버구조도
+![image](https://user-images.githubusercontent.com/43979984/113081618-f8bb7200-9213-11eb-8833-673f832ea52e.png)
